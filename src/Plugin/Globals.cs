@@ -9,9 +9,9 @@ namespace SharpTimer
     public partial class SharpTimer
     {
         public override string ModuleName => "SharpTimer";
-        public override string ModuleVersion => $"0.2.4 - {new DateTime(Builtin.CompileTime, DateTimeKind.Utc)}";
+        public override string ModuleVersion => $"0.2.4 - b10";
         public override string ModuleAuthor => "dea https://github.com/deafps/";
-        public override string ModuleDescription => "A CS2 Timer Plugin";
+        public override string ModuleDescription => "A CS2 Timer Plugin //Fixed by NATroutter";
 
         private Dictionary<int, PlayerTimerInfo> playerTimers = [];
         private Dictionary<int, PlayerJumpStats> playerJumpStats = [];
@@ -31,7 +31,7 @@ namespace SharpTimer
             PropertyNameCaseInsensitive = true
         };
 
-        public string msgPrefix = $" {ChatColors.Green}[SharpTimer]{ChatColors.White} ";
+        public string msgPrefix = $"[SharpTimer] ";
         public string primaryHUDcolor = "green";
         public string secondaryHUDcolor = "orange";
         public string tertiaryHUDcolor = "white";

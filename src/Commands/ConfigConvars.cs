@@ -677,13 +677,12 @@ namespace SharpTimer
 
             string args = command.ArgString.Trim();
 
-            if (string.IsNullOrEmpty(args))
-            {
-                msgPrefix = $" {ChatColors.Green}[SharpTimer] {ChatColors.White}";
+            if(string.IsNullOrEmpty(args)) {
+                msgPrefix = $" {Theme.main} [SurfTimer] {Theme.text}";
                 return;
             }
 
-            msgPrefix = $" {ParsePrefixColors(args)} {ChatColors.White}";
+            msgPrefix = $" {Theme.main} {args} {Theme.text}";
         }
 
         [ConsoleCommand("sharptimer_hud_primary_color", "Primary Color for Timer HUD. Default value: green")]

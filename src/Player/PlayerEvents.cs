@@ -61,7 +61,7 @@ namespace SharpTimer
                     //PlayerSettings
                     if (useMySQL == true && isForBot == false) _ = Task.Run(async () => await GetPlayerStats(player, steamID, playerName, playerSlot, true));
 
-                    if (connectMsgEnabled == true && useMySQL == false) Server.PrintToChatAll($"{msgPrefix}Player {ChatColors.Red}{playerName} {ChatColors.White}connected!");
+                    if (connectMsgEnabled == true && useMySQL == false) Server.PrintToChatAll($"{msgPrefix}Player {Theme.high}{playerName} {Theme.text}connected!");
                     if (cmdJoinMsgEnabled == true && isForBot == false) PrintAllEnabledCommands(player);
 
                     SharpTimerDebug($"Added player {playerName} with Slot {playerSlot} to connectedPlayers");
@@ -134,7 +134,7 @@ namespace SharpTimer
 
                     if (connectMsgEnabled == true && isForBot == false)
                     {
-                        Server.PrintToChatAll($"{msgPrefix}Player {ChatColors.Red}{connectedPlayer.PlayerName} {ChatColors.White}disconnected!");
+                        Server.PrintToChatAll($"{msgPrefix}Player {Theme.high}{connectedPlayer.PlayerName} {Theme.text}disconnected!");
                     }
                 }
             }
@@ -144,64 +144,5 @@ namespace SharpTimer
             }
         }
 
-        private HookResult OnPlayerChatTeam(CCSPlayerController? player, CommandInfo message)
-        {
-            if (displayChatTags == false) return HookResult.Continue;
-            string msg;
-            if (player == null || !player.IsValid || player.IsBot || string.IsNullOrEmpty(message.GetArg(1)))
-            {
-                return HookResult.Handled;
-            }
-            else
-            {
-                msg = message.GetArg(1);
-            }
-
-            if (msg.Length > 0 &&
-            (msg[0] == '!' || msg[0] == '/' || msg[0] == '.'))
-            {
-                return HookResult.Continue;
-            }
-            else
-            {
-                char rankColor = GetRankColorForChat(player);
-
-                if (playerTimers.TryGetValue(player.Slot, out PlayerTimerInfo? value))
-                {
-                    Server.PrintToChatAll($" {primaryChatColor}● {(value.IsVip ? $"{ChatColors.Magenta}[{customVIPTag}] " : "")}{rankColor}[{value.CachedRank}]{ChatColors.Default} {player.PlayerName}: {msg}");
-                }
-                return HookResult.Handled;
-            }
-        }
-
-        private HookResult OnPlayerChatAll(CCSPlayerController? player, CommandInfo message)
-        {
-            if (displayChatTags == false) return HookResult.Continue;
-            string msg;
-            if (player == null || !player.IsValid || player.IsBot || string.IsNullOrEmpty(message.GetArg(1)))
-            {
-                return HookResult.Handled;
-            }
-            else
-            {
-                msg = message.GetArg(1);
-            }
-
-            if (msg.Length > 0 &&
-            (msg[0] == '!' || msg[0] == '/' || msg[0] == '.'))
-            {
-                return HookResult.Continue;
-            }
-            else
-            {
-                char rankColor = GetRankColorForChat(player);
-
-                if (playerTimers.TryGetValue(player.Slot, out PlayerTimerInfo? value))
-                {
-                    Server.PrintToChatAll($" {ChatColors.Grey}[ALL] {primaryChatColor}● {(value.IsVip ? $"{ChatColors.Magenta}[{customVIPTag}] " : "")}{rankColor}[{value.CachedRank}]{ChatColors.Default} {player.PlayerName}: {msg}");
-                }
-                return HookResult.Handled;
-            }
-        }
     }
 }

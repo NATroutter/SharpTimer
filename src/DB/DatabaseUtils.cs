@@ -442,7 +442,7 @@ namespace SharpTimer
 
                                 await upsertCommand.ExecuteNonQueryAsync();
                                 Server.NextFrame(() => SharpTimerDebug($"Got player stats from MySQL for {playerName}"));
-                                if (connectMsgEnabled && playerTimers.TryGetValue(playerSlot, out PlayerTimerInfo? value)) Server.NextFrame(() => Server.PrintToChatAll($"{msgPrefix}Player {ChatColors.Red}{playerName} {ChatColors.White}connected for the {FormatOrdinal(value.TimesConnected)} time!"));
+                                if (connectMsgEnabled && playerTimers.TryGetValue(playerSlot, out PlayerTimerInfo? value)) Server.NextFrame(() => Server.PrintToChatAll($"{msgPrefix}Player {Theme.high}{playerName} {Theme.text}connected for the {FormatOrdinal(value.TimesConnected)} time!"));
                             }
                         }
                         else
@@ -468,7 +468,7 @@ namespace SharpTimer
 
                                 await upsertCommand.ExecuteNonQueryAsync();
                                 Server.NextFrame(() => SharpTimerDebug($"Got player stats from MySQL for {playerName}"));
-                                if (connectMsgEnabled) Server.NextFrame(() => Server.PrintToChatAll($"{msgPrefix}Player {ChatColors.Red}{playerName} {ChatColors.White}connected for the first time!"));
+                                if (connectMsgEnabled) Server.NextFrame(() => Server.PrintToChatAll($"{msgPrefix}Player {Theme.high}{playerName} {Theme.text}connected for the first time!"));
                             }
                         }
                     }
@@ -671,7 +671,7 @@ namespace SharpTimer
                                     upsertCommand.Parameters.AddWithValue("@GlobalPoints", newPoints);
 
                                     await upsertCommand.ExecuteNonQueryAsync();
-                                    Server.NextFrame(() => Server.PrintToChatAll(msgPrefix + $"{primaryChatColor}{playerName}{ChatColors.Default} gained {ChatColors.Green}+{Convert.ToInt32(newPoints - playerPoints)}{ChatColors.Default} Points {ChatColors.Grey}({newPoints})"));
+                                    Server.NextFrame(() => Server.PrintToChatAll(msgPrefix + $"{Theme.high}{playerName}{Theme.text} gained {Theme.high}+{Convert.ToInt32(newPoints - playerPoints)}{Theme.text} Points ({Theme.high}{newPoints}{Theme.text})"));
                                     Server.NextFrame(() => SharpTimerDebug($"Set points in MySQL for {playerName} from {playerPoints} to {newPoints}"));
                                 }
                                 else
@@ -708,7 +708,7 @@ namespace SharpTimer
                                     upsertCommand.Parameters.AddWithValue("@GlobalPoints", newPoints);
 
                                     await upsertCommand.ExecuteNonQueryAsync();
-                                    Server.NextFrame(() => Server.PrintToChatAll(msgPrefix + $"{primaryChatColor}{playerName}{ChatColors.Default} gained {ChatColors.Green}+{Convert.ToInt32(newPoints - playerPoints)}{ChatColors.Default} Points {ChatColors.Grey}({newPoints})"));
+                                    Server.NextFrame(() => Server.PrintToChatAll(msgPrefix + $"{Theme.high}{playerName}{Theme.text} gained {Theme.high}+{Convert.ToInt32(newPoints - playerPoints)}{Theme.text} Points ({Theme.high}{newPoints}{Theme.text})"));
                                     Server.NextFrame(() => SharpTimerDebug($"Set points in MySQL for {playerName} from {playerPoints} to {newPoints}"));
                                 }
                                 else
@@ -757,7 +757,7 @@ namespace SharpTimer
                                         int currentRank = ++rank;
                                         Server.NextFrame(() =>
                                         {
-                                            if (IsAllowedPlayer(player)) player.PrintToChat(msgPrefix + $"#{currentRank}: {primaryChatColor}{playerName}{ChatColors.Default}: {primaryChatColor}{points}{ChatColors.Default} points");
+                                            if (IsAllowedPlayer(player)) player.PrintToChat($"{Theme.main}#{currentRank}: {Theme.high}{playerName}{Theme.text}: {Theme.high}{points}{Theme.text} points");
                                         });
                                     }
                                 }

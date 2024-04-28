@@ -367,8 +367,6 @@ namespace SharpTimer
         {
             if (playerTimers[player.Slot].HideJumpStats == true) return;
 
-            char color = GetJSColor(distance);
-
             var (lStrafes, lSync, lFrames) = CountLeftGroupsAndSync(playerJumpStat);
             var (rStrafes, rSync, rFrames) = CountRightGroupsAndSync(playerJumpStat);
 
@@ -378,19 +376,20 @@ namespace SharpTimer
 
             double sync = (strafeFrames != 0) ? Math.Round(syncedFrames * 100f / strafeFrames, 2) : 0;
 
-            string msg1 = $"{primaryChatColor}JS: {ChatColors.Grey}" +
-                            $"{playerJumpStat.LastJumpType}: {color}{Math.Round(distance, 2)}{ChatColors.Grey} | " +
-                            $"Pre: {primaryChatColor}{Math.Round(ParseVector(playerJumpStat.LastSpeed!).Length2D(), 2)}{ChatColors.Grey} | " +
-                            $"Max: {primaryChatColor}{Math.Round(playerJumpStat.jumpFrames.Last().MaxSpeed, 2)}{ChatColors.Grey} | " +
-                            $"Strafes: {primaryChatColor}{strafes}{ChatColors.Grey} | ";
-            string msg2 =   $"{ChatColors.Grey}Height: {primaryChatColor}{Math.Round(playerJumpStat.jumpFrames.Last().MaxHeight, 2)}{ChatColors.Grey} | " +
-                            $"Width: {primaryChatColor}{GetMaxWidth(playerpos, playerJumpStat)}{ChatColors.Grey} | " +
-                            $"WT: {primaryChatColor}{playerJumpStat.WTicks}{ChatColors.Grey} | " +
-                            $"Sync: {primaryChatColor}{sync}%";
+            string msg1 = "" + 
+                            $"{Theme.high}JumpStats: {Theme.text}" +
+                            $"{Theme.main}{playerJumpStat.LastJumpType}: {Theme.high}{Math.Round(distance, 2)}{Theme.text} | " +
+                            $"{Theme.main}Pre: {Theme.high}{Math.Round(ParseVector(playerJumpStat.LastSpeed!).Length2D(), 2)}{Theme.text} | " +
+                            $"{Theme.main}Max: {Theme.high}{Math.Round(playerJumpStat.jumpFrames.Last().MaxSpeed, 2)}{Theme.text} | " +
+                            $"{Theme.main}Strafes: {Theme.high}{strafes}{Theme.text} | ";
+            string msg2 =   $"{Theme.main}Height: {Theme.high}{Math.Round(playerJumpStat.jumpFrames.Last().MaxHeight, 2)}{Theme.text} | " +
+                            $"{Theme.main}Width: {Theme.high}{GetMaxWidth(playerpos, playerJumpStat)}{Theme.text} | " +
+                            $"{Theme.main}WT: {Theme.high}{playerJumpStat.WTicks}{Theme.text} | " +
+                            $"{Theme.main}Sync: {Theme.high}{sync}%";
 
-            player.PrintToChat(msgPrefix + msg1);
+            player.PrintToChat(msg1);
             //print on next server frame so client chat does not bug out that much
-            player.PrintToChat(msgPrefix + msg2);
+            player.PrintToChat(msg2);
 
             player.PrintToConsole($"-----------------------------------------------------------------------------------------------------------------------");
             player.PrintToConsole(msg1);

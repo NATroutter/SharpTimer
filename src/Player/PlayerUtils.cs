@@ -13,24 +13,24 @@ namespace SharpTimer
             SharpTimerDebug($"Printing Commands for {player.PlayerName}");
             player.PrintToChat($"{msgPrefix}Available Commands:");
 
-            if (respawnEnabled) player.PrintToChat($"{msgPrefix}!r (css_r) - Respawns you");
-            if (respawnEnabled && bonusRespawnPoses.Count != 0) player.PrintToChat($"{msgPrefix}!rb <#> / !b <#> (css_rb / css_b) - Respawns you to a bonus");
-            if (topEnabled) player.PrintToChat($"{msgPrefix}!top (css_top) - Lists top 10 records on this map");
-            if (topEnabled && bonusRespawnPoses.Count != 0) player.PrintToChat($"{msgPrefix}!topbonus <#> (css_topbonus) - Lists top 10 records of a bonus");
-            if (rankEnabled) player.PrintToChat($"{msgPrefix}!rank (css_rank) - Shows your current rank and pb");
-            if (globalRanksEnabled) player.PrintToChat($"{msgPrefix}!points (css_points) - Prints top 10 points");
-            if (goToEnabled) player.PrintToChat($"{msgPrefix}!goto <name> (css_goto) - Teleports you to a player");
-            if (stageTriggerPoses.Count != 0) player.PrintToChat($"{msgPrefix}!stage <#> (css_stage) - Teleports you to a stage");
+            if (respawnEnabled) player.PrintToChat($"{msgPrefix}{Theme.high}!r (css_r) - Respawns you");
+            if (respawnEnabled && bonusRespawnPoses.Count != 0) player.PrintToChat($"{msgPrefix}{Theme.high}!rb <#> / !b <#> (css_rb / css_b) {Theme.text}- Respawns you to a bonus");
+            if (topEnabled) player.PrintToChat($"{msgPrefix}{Theme.high}!top (css_top) {Theme.text}- Lists top 10 records on this map");
+            if (topEnabled && bonusRespawnPoses.Count != 0) player.PrintToChat($"{msgPrefix}{Theme.high}!topbonus <#> (css_topbonus) {Theme.text}- Lists top 10 records of a bonus");
+            if (rankEnabled) player.PrintToChat($"{msgPrefix}{Theme.high}!rank (css_rank) {Theme.text}- Shows your current rank and pb");
+            if (globalRanksEnabled) player.PrintToChat($"{msgPrefix}{Theme.high}!points (css_points) {Theme.text}- Prints top 10 points");
+            if (goToEnabled) player.PrintToChat($"{msgPrefix}{Theme.high}!goto <name> (css_goto){Theme.text} - Teleports you to a player");
+            if (stageTriggerPoses.Count != 0) player.PrintToChat($"{msgPrefix}{Theme.high}!stage <#> (css_stage) {Theme.text}- Teleports you to a stage");
 
             if (cpEnabled)
             {
-                player.PrintToChat($"{msgPrefix}{(currentMapName!.Contains("surf_") ? "!saveloc (css_saveloc) - Saves a Loc" : "!cp (css_cp) - Sets a Checkpoint")}");
-                player.PrintToChat($"{msgPrefix}{(currentMapName!.Contains("surf_") ? "!loadloc (css_loadloc) - Teleports you to the last Loc" : "!tp (css_tp) - Teleports you to the last Checkpoint")}");
-                player.PrintToChat($"{msgPrefix}{(currentMapName!.Contains("surf_") ? "!prevloc (css_prevloc) - Teleports you one Loc back" : "!prevcp (css_prevcp) - Teleports you one Checkpoint back")}");
-                player.PrintToChat($"{msgPrefix}{(currentMapName!.Contains("surf_") ? "!nextloc (css_nextloc) - Teleports you one Loc forward" : "!nextcp (css_nextcp) - Teleports you one Checkpoint forward")}");
+                player.PrintToChat($"{msgPrefix}{(currentMapName!.Contains("surf_") ? $"{Theme.high}!saveloc (css_saveloc) {Theme.text}- Saves a Loc" : $"{Theme.high}!cp (css_cp) {Theme.text}- Sets a Checkpoint")}");
+                player.PrintToChat($"{msgPrefix}{(currentMapName!.Contains("surf_") ? $"{Theme.high}!loadloc (css_loadloc) {Theme.text}- Teleports you to the last Loc" : $"{Theme.high}!tp (css_tp) {Theme.text}- Teleports you to the last Checkpoint")}");
+                player.PrintToChat($"{msgPrefix}{(currentMapName!.Contains("surf_") ? $"{Theme.high}!prevloc (css_prevloc) {Theme.text}- Teleports you one Loc back" : $"{Theme.high}!prevcp (css_prevcp) {Theme.text}- Teleports you one Checkpoint back")}");
+                player.PrintToChat($"{msgPrefix}{(currentMapName!.Contains("surf_") ? $"{Theme.high}!nextloc (css_nextloc) {Theme.text}- Teleports you one Loc forward" : $"{Theme.high}!nextcp (css_nextcp) {Theme.text}- Teleports you one Checkpoint forward")}");
             }
 
-            if (jumpStatsEnabled) player.PrintToChat($"{msgPrefix}!jumpstats (css_jumpstats) - Toggles JumpStats");
+            if (jumpStatsEnabled) player.PrintToChat($"{msgPrefix}{Theme.high}!jumpstats (css_jumpstats) {Theme.text}- Toggles JumpStats");
         }
 
         public void ForcePlayerSpeed(CCSPlayerController player, string activeWeapon)
@@ -485,34 +485,34 @@ namespace SharpTimer
             if (oldticks != 0)
             {
                 if (discordWebhookEnabled) timeDifferenceNoCol = FormatTimeDifference(newticks, oldticks, true);
-                timeDifference = $"[{FormatTimeDifference(newticks, oldticks)}{ChatColors.White}] ";
+                timeDifference = $"[{FormatTimeDifference(newticks, oldticks)}{Theme.text}] ";
             }
 
             Server.NextFrame(() =>
             {
                 if (IsAllowedPlayer(player) && timesFinished > maxGlobalFreePoints && globalRanksFreePointsEnabled == true && oldticks < newticks)
-                    player.PrintToChat(msgPrefix + $"{ChatColors.White} You reached your maximum free points rewards of {primaryChatColor}{maxGlobalFreePoints}{ChatColors.White}!");
+                    player.PrintToChat(msgPrefix + $"You reached your maximum free points rewards of {Theme.high}{maxGlobalFreePoints}{Theme.text}!");
 
                 if (newSR)
                 {
-                    Server.PrintToChatAll(msgPrefix + $"{primaryChatColor}{playerName} {ChatColors.White}set a new {(bonusX != 0 ? $"Bonus {bonusX} SR!" : "SR!")}");
+                    Server.PrintToChatAll(msgPrefix + $"{Theme.high}{playerName} {Theme.text}set a new {(bonusX != 0 ? $"Bonus {bonusX} SR!" : "SR!")}");
                     if (discordWebhookPrintSR && discordWebhookEnabled && useMySQL == true) _ = Task.Run(async () => await DiscordRecordMessage(playerName, newTime, steamID, ranking, timesFinished, true, timeDifferenceNoCol, bonusX));
                 }
                 else if (beatPB)
                 {
-                    Server.PrintToChatAll(msgPrefix + $"{primaryChatColor}{playerName} {ChatColors.White}set a new {(bonusX != 0 ? $"Bonus {bonusX} PB!" : "Map PB!")}");
+                    Server.PrintToChatAll(msgPrefix + $"{Theme.high}{playerName} {Theme.text}set a new {(bonusX != 0 ? $"Bonus {bonusX} PB!" : "Map PB!")}");
                     if (discordWebhookPrintPB && discordWebhookEnabled && useMySQL == true) _ = Task.Run(async () => await DiscordRecordMessage(playerName, newTime, steamID, ranking, timesFinished, false, timeDifferenceNoCol, bonusX));
                 }
                 else
                 {
-                    Server.PrintToChatAll(msgPrefix + $"{primaryChatColor}{playerName} {ChatColors.White}finished the {(bonusX != 0 ? $"Bonus {bonusX}!" : "Map!")}");
+                    Server.PrintToChatAll(msgPrefix + $"{Theme.high}{playerName} {Theme.text}finished the {(bonusX != 0 ? $"Bonus {bonusX}!" : "Map!")}");
                     if (discordWebhookPrintPB && discordWebhookEnabled && timesFinished == 1 && useMySQL == true) _ = Task.Run(async () => await DiscordRecordMessage(playerName, newTime, steamID, ranking, timesFinished, false, timeDifferenceNoCol, bonusX));
                 }
 
                 if (useMySQL != false || bonusX != 0)
-                    Server.PrintToChatAll(msgPrefix + $"{(bonusX != 0 ? $"" : $"Rank: [{primaryChatColor}{ranking}{ChatColors.White}] ")}{(timesFinished != 0 && useMySQL == true ? $"Times Finished: [{primaryChatColor}{timesFinished}{ChatColors.White}]" : "")}");
+                    Server.PrintToChatAll(msgPrefix + $"{(bonusX != 0 ? $"" : $"Rank: [{Theme.high}{ranking}{Theme.text}] ")}{(timesFinished != 0 && useMySQL == true ? $"Times Finished: [{Theme.high}{timesFinished}{Theme.text}]" : "")}");
 
-                Server.PrintToChatAll(msgPrefix + $"Time: [{primaryChatColor}{newTime}{ChatColors.White}] {timeDifference}");
+                Server.PrintToChatAll(msgPrefix + $"Time: [{Theme.high}{newTime}{Theme.text}] {timeDifference}");
 
                 if (IsAllowedPlayer(player) && playerTimers[player.Slot].SoundsEnabled != false) player.ExecuteClientCommand($"play {beepSound}");
 

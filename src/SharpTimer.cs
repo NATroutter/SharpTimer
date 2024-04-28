@@ -11,7 +11,8 @@ namespace SharpTimer
         public override void Load(bool hotReload)
         {
             SharpTimerConPrint("Loading Plugin...");
-            CheckForUpdate();
+            SharpTimerConPrint("Version: " + this.ModuleVersion);
+            //CheckForUpdate();
 
             defaultServerHostname = ConVar.Find("hostname")!.StringValue;
             Server.ExecuteCommand($"execifexists SharpTimer/config.cfg");
@@ -207,8 +208,6 @@ namespace SharpTimer
                 DamageHook();
             });
 
-            AddCommandListener("say", OnPlayerChatAll);
-            AddCommandListener("say_team", OnPlayerChatTeam);
             AddCommandListener("jointeam", OnCommandJoinTeam);
 
             SharpTimerConPrint("Plugin Loaded");
@@ -217,8 +216,6 @@ namespace SharpTimer
         public override void Unload(bool hotReload)
         {
             DamageUnHook();
-            RemoveCommandListener("say", OnPlayerChatAll, HookMode.Pre);
-            RemoveCommandListener("say_team", OnPlayerChatTeam, HookMode.Pre);
             RemoveCommandListener("jointeam", OnCommandJoinTeam, HookMode.Pre);
             SharpTimerConPrint("Plugin Unloaded");
         }

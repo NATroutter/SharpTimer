@@ -101,29 +101,29 @@ namespace SharpTimer
                             return;
                         }
 
-                        Server.NextFrame(() => Server.PrintToChatAll($"{msgPrefix} Current Server Record on {primaryChatColor}{currentMapName}{ChatColors.White}: "));
+                        Server.NextFrame(() => Server.PrintToChatAll($"{msgPrefix} Current Server Record on {Theme.high}{currentMapName}{Theme.text}: "));
                         var serverRecord = sortedRecords.FirstOrDefault();
                         string playerName = serverRecord.Value.PlayerName!; // Get the player name from the dictionary value
                         int timerTicks = serverRecord.Value.TimerTicks; // Get the timer ticks from the dictionary value
-                        Server.NextFrame(() => Server.PrintToChatAll($"{msgPrefix} {primaryChatColor}{playerName} {ChatColors.White}- {primaryChatColor}{FormatTime(timerTicks)}"));
+                        Server.NextFrame(() => Server.PrintToChatAll($"{msgPrefix} {Theme.high}{playerName} {Theme.text}- {Theme.high}{FormatTime(timerTicks)}"));
                     }
 
-                    string[] adMessages = [ $"{msgPrefix} Type {primaryChatColor}!sthelp{ChatColors.Default} to see all commands!",
-                                    $"{(enableReplays ? $"{msgPrefix} Type {primaryChatColor}!replaypb{ChatColors.Default} to watch a replay of your personal best run!" : "")}",
-                                    $"{(enableReplays ? $"{msgPrefix} Type {primaryChatColor}!replaysr{ChatColors.Default} to watch a replay of the SR on {primaryChatColor}{currentMapName}{ChatColors.Default}!" : "")}",
-                                    $"{(enableReplays ? $"{msgPrefix} Type {primaryChatColor}!replaytop <#>{ChatColors.Default} to watch a replay top run on {primaryChatColor}{currentMapName}{ChatColors.Default}!" : "")}",
-                                    $"{(globalRanksEnabled ? $"{msgPrefix} Type {primaryChatColor}!points{ChatColors.Default} to see the top 10 players with the most points!" : "")}",
-                                    $"{(respawnEnabled ? $"{msgPrefix} Type {primaryChatColor}!r{ChatColors.Default} to respawn back to start!" : "")}",
-                                    $"{(topEnabled ? $"{msgPrefix} Type {primaryChatColor}!top{ChatColors.Default} to see the top 10 players on {primaryChatColor}{currentMapName}{ChatColors.Default}!" : "")}",
-                                    $"{(rankEnabled ? $"{msgPrefix} Type {primaryChatColor}!rank{ChatColors.Default} to see your current PB and Rank!" : "")}",
-                                    $"{(cpEnabled ? $"{msgPrefix} Type {primaryChatColor}{(currentMapName!.Contains("surf_") ? "!saveloc" : "!cp")}{ChatColors.Default} to {(currentMapName.Contains("surf_") ? "save a new loc" : "set a new checkpoint")}!" : "")}",
-                                    $"{(cpEnabled ? $"{msgPrefix} Type {primaryChatColor}{(currentMapName!.Contains("surf_") ? "!loadloc" : "!tp")}{ChatColors.Default} to {(currentMapName.Contains("surf_") ? "load the last loc" : "teleport to your last checkpoint")}!" : "")}",
-                                    $"{(goToEnabled ? $"{msgPrefix} Type {primaryChatColor}!goto <name>{ChatColors.Default} to teleport to a player!" : "")}",
-                                    $"{msgPrefix} Type {primaryChatColor}!fov <0-140>{ChatColors.Default} to change your field of view!",
-                                    $"{msgPrefix} Type {primaryChatColor}!sounds{ChatColors.Default} to toggle timer sounds!",
-                                    $"{msgPrefix} Type {primaryChatColor}!hud{ChatColors.Default} to toggle timer hud!",
-                                    $"{msgPrefix} Type {primaryChatColor}!keys{ChatColors.Default} to toggle hud keys!",
-                                    $"{(jumpStatsEnabled ? $"{msgPrefix} Type {primaryChatColor}!jumpstats{ChatColors.Default} to toggle JumpStats!" : "")}",];
+                    string[] adMessages = [ $"{msgPrefix} Type {Theme.high}!sthelp{Theme.text} to see all commands!",
+                                    $"{(enableReplays ? $"{msgPrefix} Type {Theme.high}!replaypb{Theme.text} to watch a replay of your personal best run!" : "")}",
+                                    $"{(enableReplays ? $"{msgPrefix} Type {Theme.high}!replaysr{Theme.text} to watch a replay of the SR on {Theme.high}{currentMapName}{Theme.text}!" : "")}",
+                                    $"{(enableReplays ? $"{msgPrefix} Type {Theme.high}!replaytop <#>{Theme.text} to watch a replay top run on {Theme.high}{currentMapName}{Theme.text}!" : "")}",
+                                    $"{(globalRanksEnabled ? $"{msgPrefix} Type {Theme.high}!points{Theme.text} to see the top 10 players with the most points!" : "")}",
+                                    $"{(respawnEnabled ? $"{msgPrefix} Type {Theme.high}!r{Theme.text} to respawn back to start!" : "")}",
+                                    $"{(topEnabled ? $"{msgPrefix} Type {Theme.high}!top{Theme.text} to see the top 10 players on {Theme.high}{currentMapName}{Theme.text}!" : "")}",
+                                    $"{(rankEnabled ? $"{msgPrefix} Type {Theme.high}!rank{Theme.text} to see your current PB and Rank!" : "")}",
+                                    $"{(cpEnabled ? $"{msgPrefix} Type {Theme.high}{(currentMapName!.Contains("surf_") ? "!saveloc" : "!cp")}{Theme.text} to {(currentMapName.Contains("surf_") ? "save a new loc" : "set a new checkpoint")}!" : "")}",
+                                    $"{(cpEnabled ? $"{msgPrefix} Type {Theme.high}{(currentMapName!.Contains("surf_") ? "!loadloc" : "!tp")}{Theme.text} to {(currentMapName.Contains("surf_") ? "load the last loc" : "teleport to your last checkpoint")}!" : "")}",
+                                    $"{(goToEnabled ? $"{msgPrefix} Type {Theme.high}!goto <name>{Theme.text} to teleport to a player!" : "")}",
+                                    $"{msgPrefix} Type {Theme.high}!fov <0-140>{Theme.text} to change your field of view!",
+                                    $"{msgPrefix} Type {Theme.high}!sounds{Theme.text} to toggle timer sounds!",
+                                    $"{msgPrefix} Type {Theme.high}!hud{Theme.text} to toggle timer hud!",
+                                    $"{msgPrefix} Type {Theme.high}!keys{Theme.text} to toggle hud keys!",
+                                    $"{(jumpStatsEnabled ? $"{msgPrefix} Type {Theme.high}!jumpstats{Theme.text} to toggle JumpStats!" : "")}",];
 
                     var nonEmptyAds = adMessages.Where(ad => !string.IsNullOrEmpty(ad)).ToArray();
 
@@ -799,9 +799,9 @@ namespace SharpTimer
                                 _ = SpawnReplayBot();
                             else
                             {
-                                Server.PrintToChatAll($" {ChatColors.LightRed}Couldnt Spawn Replay bot!");
-                                Server.PrintToChatAll($" {ChatColors.LightRed}Please make sure mp_force_pick_time is set to 1");
-                                Server.PrintToChatAll($" {ChatColors.LightRed}in your custom_exec.cfg");
+                                Server.PrintToChatAll($"Couldnt Spawn Replay bot!");
+                                Server.PrintToChatAll($"Please make sure mp_force_pick_time is set to 1");
+                                Server.PrintToChatAll($"in your custom_exec.cfg");
                                 SharpTimerError("Couldnt Spawn Replay bot! Please make sure mp_force_pick_time is set to 1 in your custom_exec.cfg");
                             }
                         });
