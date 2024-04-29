@@ -101,33 +101,35 @@ namespace SharpTimer
                             return;
                         }
 
-                        Server.NextFrame(() => Server.PrintToChatAll($"{msgPrefix} Current Server Record on {Theme.high}{currentMapName}{Theme.text}: "));
                         var serverRecord = sortedRecords.FirstOrDefault();
                         string playerName = serverRecord.Value.PlayerName!; // Get the player name from the dictionary value
                         int timerTicks = serverRecord.Value.TimerTicks; // Get the timer ticks from the dictionary value
-                        Server.NextFrame(() => Server.PrintToChatAll($"{msgPrefix} {Theme.high}{playerName} {Theme.text}- {Theme.high}{FormatTime(timerTicks)}"));
+                        Server.NextFrame(() => {
+                            Server.PrintToChatAll($"{msgPrefix} Current Server Record on {Theme.high}{currentMapName}{Theme.text}: ");
+                            Server.PrintToChatAll($"{Theme.main}• {Theme.high}{playerName} {Theme.text}- {Theme.high}{FormatTime(timerTicks)}");
+                        });
                     }
 
-                    string[] adMessages = [ $"{msgPrefix} Type {Theme.high}!sthelp{Theme.text} to see all commands!",
-                                    $"{(enableReplays ? $"{msgPrefix} Type {Theme.high}!replaypb{Theme.text} to watch a replay of your personal best run!" : "")}",
-                                    $"{(enableReplays ? $"{msgPrefix} Type {Theme.high}!replaysr{Theme.text} to watch a replay of the SR on {Theme.high}{currentMapName}{Theme.text}!" : "")}",
-                                    $"{(enableReplays ? $"{msgPrefix} Type {Theme.high}!replaytop <#>{Theme.text} to watch a replay top run on {Theme.high}{currentMapName}{Theme.text}!" : "")}",
-                                    $"{(globalRanksEnabled ? $"{msgPrefix} Type {Theme.high}!points{Theme.text} to see the top 10 players with the most points!" : "")}",
-                                    $"{(respawnEnabled ? $"{msgPrefix} Type {Theme.high}!r{Theme.text} to respawn back to start!" : "")}",
-                                    $"{(topEnabled ? $"{msgPrefix} Type {Theme.high}!top{Theme.text} to see the top 10 players on {Theme.high}{currentMapName}{Theme.text}!" : "")}",
-                                    $"{(rankEnabled ? $"{msgPrefix} Type {Theme.high}!rank{Theme.text} to see your current PB and Rank!" : "")}",
-                                    $"{(cpEnabled ? $"{msgPrefix} Type {Theme.high}{(currentMapName!.Contains("surf_") ? "!saveloc" : "!cp")}{Theme.text} to {(currentMapName.Contains("surf_") ? "save a new loc" : "set a new checkpoint")}!" : "")}",
-                                    $"{(cpEnabled ? $"{msgPrefix} Type {Theme.high}{(currentMapName!.Contains("surf_") ? "!loadloc" : "!tp")}{Theme.text} to {(currentMapName.Contains("surf_") ? "load the last loc" : "teleport to your last checkpoint")}!" : "")}",
-                                    $"{(goToEnabled ? $"{msgPrefix} Type {Theme.high}!goto <name>{Theme.text} to teleport to a player!" : "")}",
-                                    $"{msgPrefix} Type {Theme.high}!fov <0-140>{Theme.text} to change your field of view!",
-                                    $"{msgPrefix} Type {Theme.high}!sounds{Theme.text} to toggle timer sounds!",
-                                    $"{msgPrefix} Type {Theme.high}!hud{Theme.text} to toggle timer hud!",
-                                    $"{msgPrefix} Type {Theme.high}!keys{Theme.text} to toggle hud keys!",
-                                    $"{(jumpStatsEnabled ? $"{msgPrefix} Type {Theme.high}!jumpstats{Theme.text} to toggle JumpStats!" : "")}",];
+                    //string[] adMessages = [ $"{msgPrefix} Type {Theme.high}!sthelp{Theme.text} to see all commands!",
+                    //                $"{(enableReplays ? $"{msgPrefix} Type {Theme.high}!replaypb{Theme.text} to watch a replay of your personal best run!" : "")}",
+                    //                $"{(enableReplays ? $"{msgPrefix} Type {Theme.high}!replaysr{Theme.text} to watch a replay of the SR on {Theme.high}{currentMapName}{Theme.text}!" : "")}",
+                    //                $"{(enableReplays ? $"{msgPrefix} Type {Theme.high}!replaytop <#>{Theme.text} to watch a replay top run on {Theme.high}{currentMapName}{Theme.text}!" : "")}",
+                    //                $"{(globalRanksEnabled ? $"{msgPrefix} Type {Theme.high}!points{Theme.text} to see the top 10 players with the most points!" : "")}",
+                    //                $"{(respawnEnabled ? $"{msgPrefix} Type {Theme.high}!r{Theme.text} to respawn back to start!" : "")}",
+                    //                $"{(topEnabled ? $"{msgPrefix} Type {Theme.high}!top{Theme.text} to see the top 10 players on {Theme.high}{currentMapName}{Theme.text}!" : "")}",
+                    //                $"{(rankEnabled ? $"{msgPrefix} Type {Theme.high}!rank{Theme.text} to see your current PB and Rank!" : "")}",
+                    //                $"{(cpEnabled ? $"{msgPrefix} Type {Theme.high}{(currentMapName!.Contains("surf_") ? "!saveloc" : "!cp")}{Theme.text} to {(currentMapName.Contains("surf_") ? "save a new loc" : "set a new checkpoint")}!" : "")}",
+                    //                $"{(cpEnabled ? $"{msgPrefix} Type {Theme.high}{(currentMapName!.Contains("surf_") ? "!loadloc" : "!tp")}{Theme.text} to {(currentMapName.Contains("surf_") ? "load the last loc" : "teleport to your last checkpoint")}!" : "")}",
+                    //                $"{(goToEnabled ? $"{msgPrefix} Type {Theme.high}!goto <name>{Theme.text} to teleport to a player!" : "")}",
+                    //                $"{msgPrefix} Type {Theme.high}!fov <0-140>{Theme.text} to change your field of view!",
+                    //                $"{msgPrefix} Type {Theme.high}!sounds{Theme.text} to toggle timer sounds!",
+                    //                $"{msgPrefix} Type {Theme.high}!hud{Theme.text} to toggle timer hud!",
+                    //                $"{msgPrefix} Type {Theme.high}!keys{Theme.text} to toggle hud keys!",
+                    //                $"{(jumpStatsEnabled ? $"{msgPrefix} Type {Theme.high}!jumpstats{Theme.text} to toggle JumpStats!" : "")}",];
 
-                    var nonEmptyAds = adMessages.Where(ad => !string.IsNullOrEmpty(ad)).ToArray();
+                    //var nonEmptyAds = adMessages.Where(ad => !string.IsNullOrEmpty(ad)).ToArray();
 
-                    Server.NextFrame(() => Server.PrintToChatAll(nonEmptyAds[new Random().Next(nonEmptyAds.Length)]));
+                    //Server.NextFrame(() => Server.PrintToChatAll(nonEmptyAds[new Random().Next(nonEmptyAds.Length)]));
                     SortedCachedRecords = sortedRecords;
                 });
             }, TimerFlags.REPEAT);
@@ -169,7 +171,7 @@ namespace SharpTimer
         {
             int differenceTicks = previousTicks - currentTicks;
             string sign = (differenceTicks > 0) ? "-" : "+";
-            char signColor = (differenceTicks > 0) ? ChatColors.Green : ChatColors.Red;
+            char signColor = Theme.high;
 
             TimeSpan timeDifference = TimeSpan.FromSeconds(Math.Abs(differenceTicks) / 64.0);
 
@@ -191,7 +193,7 @@ namespace SharpTimer
             {
                 int difference = previousSpeedInt - currentSpeedInt;
                 string sign = (difference > 0) ? "-" : "+";
-                char signColor = (difference < 0) ? ChatColors.Green : ChatColors.Red;
+                char signColor = Theme.high;
 
                 return $"{(noColor ? "" : $"{signColor}")}{sign}{Math.Abs(difference)}";
             }

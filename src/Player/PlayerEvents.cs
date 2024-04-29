@@ -144,5 +144,44 @@ namespace SharpTimer
             }
         }
 
+        private HookResult OnPlayerChatTeam(CCSPlayerController? player, CommandInfo message) {
+            if(player == null || !player.IsValid || player.IsBot || string.IsNullOrEmpty(message.GetArg(1))) return HookResult.Handled;
+
+            if(message.GetArg(1).StartsWith("!") || message.GetArg(1).StartsWith("/") || message.GetArg(1).StartsWith(".")) {
+                return HookResult.Continue;
+            } else {
+
+                if(playerTimers.TryGetValue(player.Slot, out PlayerTimerInfo? value)) {
+                    Server.PrintToChatAll($" {ChatColors.Grey}[TEAM] {formatGroup(player)} {ChatColors.Lime}[{value.CachedRank}] {ChatColors.Grey}{player.PlayerName}: {ChatColors.White}{message.GetArg(1)}");
+                }
+                return HookResult.Handled;
+            }
+        }
+
+        private HookResult OnPlayerChatAll(CCSPlayerController? player, CommandInfo message) {
+            if(player == null || !player.IsValid || player.IsBot || string.IsNullOrEmpty(message.GetArg(1))) return HookResult.Handled;
+
+            if(message.GetArg(1).StartsWith("!") || message.GetArg(1).StartsWith("/") || message.GetArg(1).StartsWith(".")) {
+                return HookResult.Continue;
+            } else {
+                if(playerTimers.TryGetValue(player.Slot, out PlayerTimerInfo? value)) {
+                    Server.PrintToChatAll($" {formatGroup(player)} {ChatColors.Lime}[{value.CachedRank}] {ChatColors.Grey}{player.PlayerName}: {ChatColors.White}{message.GetArg(1)}");
+                }
+                return HookResult.Handled;
+            }
+        }
+
+        private String formatGroup(CCSPlayerController player) {
+            if(AdminManager.PlayerHasPermissions(player, "@css/group_admin")) {
+                return $"{ChatColors.DarkRed}[ADMIN]{ChatColors.Grey}";
+            } else if(AdminManager.PlayerHasPermissions(player, "@css/group_mod")) {
+                return $"{ChatColors.LightBlue}[MOD]{ChatColors.Grey}";
+            } else if(AdminManager.PlayerHasPermissions(player, "@css/group_vip")) {
+                return $"{ChatColors.Yellow}[VIP]{ChatColors.Grey}";
+            }
+            return "";
+        }
+
+
     }
 }

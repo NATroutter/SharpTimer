@@ -9,7 +9,7 @@ namespace SharpTimer
     public partial class SharpTimer
     {
         public override string ModuleName => "SharpTimer";
-        public override string ModuleVersion => $"0.2.4 - b10";
+        public override string ModuleVersion => $"0.2.4 - b12";
         public override string ModuleAuthor => "dea https://github.com/deafps/";
         public override string ModuleDescription => "A CS2 Timer Plugin //Fixed by NATroutter";
 

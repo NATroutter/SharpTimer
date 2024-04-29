@@ -611,6 +611,7 @@ namespace SharpTimer
 
         public char GetRankColorForChat(CCSPlayerController player)
         {
+            return Theme.text;
             try
             {
                 if (playerTimers.TryGetValue(player.Slot, out PlayerTimerInfo? playerTimer))

@@ -297,19 +297,18 @@ namespace SharpTimer
             }
         }
 
-        [ConsoleCommand("css_help", "alias for !sthelp")]
-        [ConsoleCommand("css_sthelp", "Prints all commands for the player")]
-        [CommandHelper(whoCanExecute: CommandUsage.CLIENT_ONLY)]
-        public void HelpCommand(CCSPlayerController? player, CommandInfo command)
-        {
-            if (!IsAllowedPlayer(player) || !helpEnabled)
-            {
-                if (!IsAllowedSpectator(player))
-                    return;
-            }
+        //[ConsoleCommand("css_sthelp", "Prints all commands for the player")]
+        //[CommandHelper(whoCanExecute: CommandUsage.CLIENT_ONLY)]
+        //public void HelpCommand(CCSPlayerController? player, CommandInfo command)
+        //{
+        //    if (!IsAllowedPlayer(player) || !helpEnabled)
+        //    {
+        //        if (!IsAllowedSpectator(player))
+        //            return;
+        //    }
 
-            PrintAllEnabledCommands(player!);
-        }
+        //    PrintAllEnabledCommands(player!);
+        //}
 
         /* [ConsoleCommand("css_spec", "Moves you to Spectator")]
         [CommandHelper(whoCanExecute: CommandUsage.CLIENT_ONLY)]

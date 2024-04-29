@@ -209,14 +209,19 @@ namespace SharpTimer
             });
 
             AddCommandListener("jointeam", OnCommandJoinTeam);
+            AddCommandListener("say", OnPlayerChatAll);
+            AddCommandListener("say_team", OnPlayerChatTeam);
 
             SharpTimerConPrint("Plugin Loaded");
+
         }
 
         public override void Unload(bool hotReload)
         {
             DamageUnHook();
             RemoveCommandListener("jointeam", OnCommandJoinTeam, HookMode.Pre);
+            RemoveCommandListener("say", OnPlayerChatAll, HookMode.Pre);
+            RemoveCommandListener("say_team", OnPlayerChatTeam, HookMode.Pre);
             SharpTimerConPrint("Plugin Unloaded");
         }
     }
