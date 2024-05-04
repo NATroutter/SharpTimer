@@ -237,7 +237,7 @@ namespace SharpTimer
         {
             return string.Format(loc_string, args);
         }
-        
+
         static string ParsePrefixColors(string input)
         {
             Dictionary<string, string> colorNameSymbolMap = new(StringComparer.OrdinalIgnoreCase)
@@ -582,7 +582,7 @@ namespace SharpTimer
                 currentMapNamee = bonusX == 0 ? $"{currentMapName!}.json" : $"{currentMapName}_bonus{bonusX}.json";
             else
                 currentMapNamee = mapName;
-            
+
             string mapRecordsPath = Path.Combine(playerRecordsPath!, currentMapNamee);
 
             Dictionary<string, PlayerRecord> records;
@@ -923,10 +923,8 @@ namespace SharpTimer
                     else
                     {
                         (currentRespawnPos, currentRespawnAng) = FindStartTriggerPos();
-
+                        currentEndPos = FindEndTriggerPos();
                         FindBonusStartTriggerPos();
-                        FindStageTriggers();
-                        FindCheckpointTriggers();
                         SharpTimerConPrint($"RespawnPos not found, trying to hook trigger pos instead");
                         if (currentRespawnPos == null)
                         {
@@ -938,16 +936,20 @@ namespace SharpTimer
                         }
                     }
 
-                    if (!string.IsNullOrEmpty(mapInfo.OverrideDisableTelehop))
+                    if (mapInfo.OverrideDisableTelehop != null && mapInfo.OverrideDisableTelehop.Length != 0)
                     {
                         try
                         {
-                            currentMapOverrideDisableTelehop = bool.Parse(mapInfo.OverrideDisableTelehop);
+                            currentMapOverrideDisableTelehop = mapInfo.OverrideDisableTelehop
+                                .Split(',')
+                                .Select(trigger => trigger.Trim())
+                                .ToArray();
+
                             SharpTimerConPrint($"Overriding OverrideDisableTelehop...");
                         }
                         catch (FormatException)
                         {
-                            SharpTimerError("Invalid boolean string format for OverrideDisableTelehop");
+                            SharpTimerError("Invalid string format for OverrideDisableTelehop... Example: 's1_end, s2_end, s3_end, s4_end, s5_end, s6_end, s7_end, s8_end'");
                         }
                     }
                     else
@@ -955,14 +957,14 @@ namespace SharpTimer
                         currentMapOverrideStageRequirement = false;
                     }
 
-                    if (mapInfo.OverrideMaxSpeedLimit != null && mapInfo.OverrideMaxSpeedLimit.Any())
+                    if (mapInfo.OverrideMaxSpeedLimit != null && mapInfo.OverrideMaxSpeedLimit.Length != 0)
                     {
                         try
                         {
                             SharpTimerConPrint($"Overriding MaxSpeedLimit...");
                             currentMapOverrideMaxSpeedLimit = mapInfo.OverrideMaxSpeedLimit
                                 .Split(',')
-                                .Select(color => color.Trim())
+                                .Select(trigger => trigger.Trim())
                                 .ToArray();
 
                             foreach (var trigger in currentMapOverrideMaxSpeedLimit)
@@ -1078,6 +1080,12 @@ namespace SharpTimer
                     if (triggerPushFixEnabled == true && currentMapOverrideTriggerPushFix == false)
                         FindTriggerPushData();
 
+                    if (useTriggers == true)
+                    {
+                        FindStageTriggers();
+                        FindCheckpointTriggers();
+                    }
+
                     KillServerCommandEnts();
                 }
                 else
@@ -1154,7 +1162,7 @@ namespace SharpTimer
 
             currentMapTier = null; //making sure previous map tier and type are wiped
             currentMapType = null;
-            currentMapOverrideDisableTelehop = false; //making sure previous map overrides are reset
+            currentMapOverrideDisableTelehop = []; //making sure previous map overrides are reset
             currentMapOverrideMaxSpeedLimit = [];
             currentMapOverrideStageRequirement = false;
             currentMapOverrideTriggerPushFix = false;
