@@ -106,7 +106,7 @@ namespace SharpTimer
                         int timerTicks = serverRecord.Value.TimerTicks; // Get the timer ticks from the dictionary value
                         Server.NextFrame(() => {
                             Server.PrintToChatAll($"{msgPrefix} Current Server Record on {Theme.high}{currentMapName}{Theme.text}: ");
-                            Server.PrintToChatAll($" {Theme.main}• {Theme.high}{playerName} {Theme.text}- {Theme.high}{FormatTime(timerTicks)}");
+                            Server.PrintToChatAll($" {Theme.main}ï¿½ {Theme.high}{playerName} {Theme.text}- {Theme.high}{FormatTime(timerTicks)}");
                         });
                     }
 

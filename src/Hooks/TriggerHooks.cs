@@ -106,7 +106,7 @@ namespace SharpTimer
                     {
                         playerCheckpoints.Remove(playerSlot);
                     }
-                    
+
                     InvalidateTimer(player, callerHandle);
 
                     if ((maxStartingSpeedEnabled == true && use2DSpeed == false && Math.Round(player.PlayerPawn.Value!.AbsVelocity.Length()) > maxStartingSpeed) ||
